@@ -1,39 +1,37 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Package, Home } from 'lucide-react';
-import { useCart } from '../hooks/useCart';
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { ShoppingCart, Package, Home } from 'lucide-react'
+import { useCart } from '../hooks/useCart'
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const location = useLocation();
-  const { cart } = useCart();
+  const location = useLocation()
+  const { cart } = useCart()
   
-  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 
   const navigation = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'Products', path: '/products', icon: Package },
     { name: 'Cart', path: '/cart', icon: ShoppingCart },
-  ];
+  ]
 
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <Link to="/" className="text-xl font-bold text-blue-600">
-                ShopNow
-              </Link>
-            </div>
+            <Link to="/" className="text-2xl font-bold text-blue-600">
+              ShopNow
+            </Link>
             
             <nav className="flex items-center space-x-6">
               {navigation.map((item) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.path;
+                const Icon = item.icon
+                const isActive = location.pathname === item.path
                 
                 return (
                   <Link
@@ -53,7 +51,7 @@ export default function Layout({ children }: LayoutProps) {
                       </span>
                     )}
                   </Link>
-                );
+                )
               })}
             </nav>
           </div>
@@ -72,5 +70,5 @@ export default function Layout({ children }: LayoutProps) {
         </div>
       </footer>
     </div>
-  );
+  )
 }

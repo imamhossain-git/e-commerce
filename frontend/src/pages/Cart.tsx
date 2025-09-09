@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
-import { useCart } from '../hooks/useCart';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
+import { useCart } from '../hooks/useCart'
 
 export default function Cart() {
-  const { cart, updateQuantity, removeFromCart, total, isLoading } = useCart();
+  const { cart, updateQuantity, removeFromCart, total, isLoading } = useCart()
 
   if (isLoading) {
     return (
@@ -13,7 +13,7 @@ export default function Cart() {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
       </div>
-    );
+    )
   }
 
   if (cart.length === 0) {
@@ -31,7 +31,7 @@ export default function Cart() {
           </Link>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -56,7 +56,7 @@ export default function Cart() {
 
                 <div className="flex items-center space-x-3">
                   <button
-                    onClick={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     className="p-1 text-gray-400 hover:text-gray-600"
                   >
                     <Minus className="w-4 h-4" />
@@ -127,5 +127,5 @@ export default function Cart() {
         </div>
       </div>
     </div>
-  );
+  )
 }

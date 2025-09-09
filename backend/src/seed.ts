@@ -1,13 +1,13 @@
-import { pool } from './db/connection.js';
+import { pool } from './db/connection.js'
 
 async function seedDatabase() {
-  const client = await pool.connect();
+  const client = await pool.connect()
   
   try {
-    console.log('Seeding database...');
+    console.log('Seeding database...')
 
     // Clear existing data
-    await client.query('TRUNCATE TABLE products RESTART IDENTITY CASCADE');
+    await client.query('TRUNCATE TABLE products RESTART IDENTITY CASCADE')
 
     // Insert sample products
     const products = [
@@ -59,24 +59,24 @@ async function seedDatabase() {
         price: 79.99,
         image_url: 'https://images.pexels.com/photos/3394658/pexels-photo-3394658.jpeg?auto=compress&cs=tinysrgb&w=500'
       }
-    ];
+    ]
 
     for (const product of products) {
       await client.query(
         'INSERT INTO products (name, description, price, image_url) VALUES ($1, $2, $3, $4)',
         [product.name, product.description, product.price, product.image_url]
-      );
+      )
     }
 
-    console.log(`✓ Inserted ${products.length} sample products`);
-    console.log('Database seeding completed successfully!');
+    console.log(`✓ Inserted ${products.length} sample products`)
+    console.log('Database seeding completed successfully!')
   } catch (error) {
-    console.error('Seeding failed:', error);
-    process.exit(1);
+    console.error('Seeding failed:', error)
+    process.exit(1)
   } finally {
-    client.release();
-    await pool.end();
+    client.release()
+    await pool.end()
   }
 }
 
-seedDatabase();
+seedDatabase()

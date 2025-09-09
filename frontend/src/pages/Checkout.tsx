@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CheckCircle } from 'lucide-react';
-import { useCart } from '../hooks/useCart';
-import { api } from '../utils/api';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { CheckCircle } from 'lucide-react'
+import { useCart } from '../hooks/useCart'
+import { api } from '../utils/api'
 
 export default function Checkout() {
-  const { cart, total, clearCart } = useCart();
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [orderComplete, setOrderComplete] = useState(false);
-  const [orderId, setOrderId] = useState<number | null>(null);
-  const navigate = useNavigate();
+  const { cart, total, clearCart } = useCart()
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [orderComplete, setOrderComplete] = useState(false)
+  const [orderId, setOrderId] = useState<number | null>(null)
+  const navigate = useNavigate()
 
   const handleSubmitOrder = async () => {
-    if (cart.length === 0) return;
+    if (cart.length === 0) return
 
     try {
-      setIsProcessing(true);
+      setIsProcessing(true)
       
       const response = await api.post('/orders', {
         items: cart.map(item => ({
-          product_id: item.product_id || item.id,
+          product_id: item.product_id,
           quantity: item.quantity,
           price: item.price
         }))
-      });
+      })
 
-      setOrderId(response.id);
-      setOrderComplete(true);
-      clearCart();
+      setOrderId(response.id)
+      setOrderComplete(true)
+      clearCart()
     } catch (error) {
-      console.error('Failed to create order:', error);
-      alert('Failed to process order. Please try again.');
+      console.error('Failed to create order:', error)
+      alert('Failed to process order. Please try again.')
     } finally {
-      setIsProcessing(false);
+      setIsProcessing(false)
     }
-  };
+  }
 
   if (orderComplete) {
     return (
@@ -56,7 +56,7 @@ export default function Checkout() {
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   if (cart.length === 0) {
@@ -73,7 +73,7 @@ export default function Checkout() {
           </button>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -128,5 +128,5 @@ export default function Checkout() {
         </button>
       </div>
     </div>
-  );
+  )
 }

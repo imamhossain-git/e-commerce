@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Package, ShoppingCart, CreditCard } from 'lucide-react';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, Package, ShoppingCart, CreditCard } from 'lucide-react'
 
 export default function Home() {
   const features = [
@@ -22,7 +22,7 @@ export default function Home() {
       icon: CreditCard,
       href: '/products'
     }
-  ];
+  ]
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -46,7 +46,7 @@ export default function Home() {
       {/* Features */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {features.map((feature) => {
-          const Icon = feature.icon;
+          const Icon = feature.icon
           return (
             <Link
               key={feature.name}
@@ -59,9 +59,9 @@ export default function Home() {
               <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.name}</h3>
               <p className="text-gray-600">{feature.description}</p>
             </Link>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

@@ -1,60 +1,64 @@
-import { useState, useEffect } from 'react';
-import { Product, CartItem } from '../types';
-import { api } from '../utils/api';
+import { useState, useEffect } from 'react'
+import { Product, CartItem } from '../types'
+import { api } from '../utils/api'
 
 export function useCart() {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [cart, setCart] = useState<CartItem[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    loadCart();
-  }, []);
+    loadCart()
+  }, [])
 
   const loadCart = async () => {
     try {
-      setIsLoading(true);
-      const data = await api.get('/cart');
-      setCart(data);
+      setIsLoading(true)
+      const data = await api.get('/cart')
+      setCart(data)
     } catch (error) {
-      console.error('Failed to load cart:', error);
-      setCart([]);
+      console.error('Failed to load cart:', error)
+      setCart([])
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const addToCart = async (product: Product) => {
     try {
-      await api.post('/cart', { product_id: product.id, quantity: 1 });
-      await loadCart();
+      await api.post('/cart', { product_id: product.id, quantity: 1 })
+      await loadCart()
     } catch (error) {
-      console.error('Failed to add to cart:', error);
+      console.error('Failed to add to cart:', error)
     }
-  };
+  }
 
-  const removeFromCart = async (productId: number) => {
+  const removeFromCart = async (cartItemId: number) => {
     try {
-      await api.delete(`/cart/${productId}`);
-      await loadCart();
+      await api.delete(`/cart/${cartItemId}`)
+      await loadCart()
     } catch (error) {
-      console.error('Failed to remove from cart:', error);
+      console.error('Failed to remove from cart:', error)
     }
-  };
+  }
 
-  const updateQuantity = async (productId: number, quantity: number) => {
+  const updateQuantity = async (cartItemId: number, quantity: number) => {
     try {
-      await api.put(`/cart/${productId}`, { quantity });
-      await loadCart();
+      if (quantity <= 0) {
+        await removeFromCart(cartItemId)
+      } else {
+        await api.put(`/cart/${cartItemId}`, { quantity })
+        await loadCart()
+      }
     } catch (error) {
-      console.error('Failed to update quantity:', error);
+      console.error('Failed to update quantity:', error)
     }
-  };
+  }
 
   const clearCart = () => {
-    setCart([]);
-  };
+    setCart([])
+  }
 
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
 
   return {
     cart,
@@ -65,5 +69,5 @@ export function useCart() {
     clearCart,
     total,
     refreshCart: loadCart
-  };
+  }
 }

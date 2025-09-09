@@ -13,8 +13,8 @@ export function useCart() {
   const loadCart = async () => {
     try {
       setIsLoading(true);
-      const response = await api.get('/cart');
-      setCart(response.data);
+      const data = await api.get('/cart');
+      setCart(data);
     } catch (error) {
       console.error('Failed to load cart:', error);
       setCart([]);

@@ -15,8 +15,8 @@ export default function Products() {
   const loadProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await api.get('/products');
-      setProducts(response.data);
+      const data = await api.get('/products');
+      setProducts(data);
     } catch (err) {
       setError('Failed to load products');
       console.error('Failed to load products:', err);

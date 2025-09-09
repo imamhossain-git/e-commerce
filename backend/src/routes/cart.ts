@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
     const result = await pool.query(`
       SELECT 
         c.id,
+        c.product_id,
         c.quantity,
         p.name,
         p.price,

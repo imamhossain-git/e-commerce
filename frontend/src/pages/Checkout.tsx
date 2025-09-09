@@ -19,13 +19,13 @@ export default function Checkout() {
       
       const response = await api.post('/orders', {
         items: cart.map(item => ({
-          product_id: item.id,
+          product_id: item.product_id || item.id,
           quantity: item.quantity,
           price: item.price
         }))
       });
 
-      setOrderId(response.data.id);
+      setOrderId(response.id);
       setOrderComplete(true);
       clearCart();
     } catch (error) {

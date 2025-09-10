@@ -72,5 +72,7 @@ app.use('*', (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.log(`🚀 Backend server running on http://localhost:${PORT}`)
+  console.log(`📊 Health check: http://localhost:${PORT}/api/health`)
+  console.log(`🛍️  Products API: http://localhost:${PORT}/api/products`)
 })

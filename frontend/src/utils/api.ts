@@ -1,5 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
+console.log('API URL:', API_URL)
+
 class ApiClient {
   private baseURL: string
 
@@ -9,6 +11,8 @@ class ApiClient {
 
   private async request(endpoint: string, options: RequestInit = {}) {
     const url = `${this.baseURL}/api${endpoint}`
+    console.log('Making request to:', url)
+    
     const config: RequestInit = {
       credentials: 'include',
       headers: {
@@ -22,6 +26,7 @@ class ApiClient {
       const response = await fetch(url, config)
       
       if (!response.ok) {
+        console.error(`HTTP error! status: ${response.status}`)
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 

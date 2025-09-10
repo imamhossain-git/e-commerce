@@ -1,20 +1,33 @@
 {
-  "name": "ecommerce-fullstack",
+  "name": "ecommerce-microservices",
   "version": "1.0.0",
-  "description": "Full-stack e-commerce application",
+  "description": "Microservices-based e-commerce application",
   "scripts": {
-    "migrate": "cd backend && npm run migrate",
-    "seed": "cd backend && npm run seed",
-    "dev:backend": "cd backend && npm run dev",
+    "install:all": "npm install && cd frontend && npm install && cd ../services/api-gateway && npm install && cd ../product-service && npm install && cd ../cart-service && npm install && cd ../order-service && npm install && cd ../user-service && npm install && cd ../..",
+    "setup:env": "cp services/api-gateway/.env.example services/api-gateway/.env && cp services/product-service/.env.example services/product-service/.env && cp services/cart-service/.env.example services/cart-service/.env && cp services/order-service/.env.example services/order-service/.env && cp services/user-service/.env.example services/user-service/.env && cp frontend/.env.example frontend/.env",
+    "dev:services": "concurrently \"npm run dev:gateway\" \"npm run dev:products\" \"npm run dev:carts\" \"npm run dev:orders\" \"npm run dev:users\"",
     "dev:frontend": "cd frontend && npm run dev",
-    "build:backend": "cd backend && npm run build",
-    "build:frontend": "cd frontend && npm run build"
+    "dev:gateway": "cd services/api-gateway && npm run dev",
+    "dev:products": "cd services/product-service && npm run dev",
+    "dev:carts": "cd services/cart-service && npm run dev",
+    "dev:orders": "cd services/order-service && npm run dev",
+    "dev:users": "cd services/user-service && npm run dev",
+    "migrate:all": "npm run migrate:products && npm run migrate:carts && npm run migrate:orders && npm run migrate:users",
+    "migrate:products": "cd services/product-service && npm run migrate",
+    "migrate:carts": "cd services/cart-service && npm run migrate",
+    "migrate:orders": "cd services/order-service && npm run migrate",
+    "migrate:users": "cd services/user-service && npm run migrate",
+    "seed:all": "npm run seed:products && npm run seed:users",
+    "seed:products": "cd services/product-service && npm run seed",
+    "seed:users": "cd services/user-service && npm run seed",
+    "build:all": "cd frontend && npm run build && cd ../services/api-gateway && npm run build && cd ../product-service && npm run build && cd ../cart-service && npm run build && cd ../order-service && npm run build && cd ../user-service && npm run build"
   },
   "workspaces": [
     "frontend",
-    "backend"
+    "services/*"
   ],
   "devDependencies": {
+    "concurrently": "^8.2.0",
     "prettier": "^3.0.0"
   }
 }
